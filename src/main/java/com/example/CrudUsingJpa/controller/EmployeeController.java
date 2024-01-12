@@ -25,16 +25,23 @@ public class EmployeeController {
 
     @GetMapping("/employee")
     public List<EmployeeDTO> getUserListWithRoles() {
-        List<Employee> userList = employeeservice.findAllWithRoles();
+        List<Employee> userList = employeeservice.getAllEmployee();
 
         // Convert to DTOs
         List<EmployeeDTO> userDTOList = userList.stream()
-                .map(this::convertToEmployeeDTO)
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
-
         return userDTOList;
     }
 
+    @GetMapping("/names")
+    public List<String> getAllEmployeeNames() {
+        List<Employee> employees = employeeservice.getAllEmployee();
+        List<String> collect = employees.stream()
+                .map(Employee::getFirstName)
+                .collect(Collectors.toList());
+        return collect;
+    }
     private EmployeeDTO convertToEmployeeDTO(Employee employee) {
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO.setFirstName(employee.getFirstName());
@@ -122,7 +129,7 @@ public class EmployeeController {
         user.setLastName(employeeDTO.getLastName());
         // Convert int to UserRole using valueOf
         try {
-            user.setType(EmployeeRole.valueOf(employeeDTO.getType()));
+            user.setType(employeeDTO.getType());
         } catch (IllegalArgumentException e) {
             // Handle the exception or log a message
             e.printStackTrace();
@@ -138,11 +145,7 @@ public class EmployeeController {
         userDTO.setEmail(createdUser.getEmail());
         userDTO.setFirstName(createdUser.getFirstName());
         userDTO.setLastName(createdUser.getLastName());
-        // Map other fields...
-
-        // Convert UserRole to int using getValue() method
-        userDTO.setType(createdUser.getType().getValue());
-
+        userDTO.setType(createdUser.getType());
         return userDTO;
     }
 

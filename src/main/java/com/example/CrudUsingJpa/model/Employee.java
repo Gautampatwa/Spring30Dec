@@ -1,6 +1,5 @@
 package com.example.CrudUsingJpa.model;
 
-import com.example.CrudUsingJpa.dto.EmployeeRole;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -21,13 +20,13 @@ public class Employee {
     @Column(name = "email")
     private String email;
     @Column(name = "type")
-    private EmployeeRole type;
+    private Integer type;
 
-    public EmployeeRole getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(EmployeeRole type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

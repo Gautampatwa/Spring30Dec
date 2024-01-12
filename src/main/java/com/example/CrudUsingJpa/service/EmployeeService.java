@@ -17,7 +17,7 @@ public class EmployeeService {
 
     public List<Employee> getAllEmployee() {
         List<Employee> employee = new ArrayList<>();
-        employeeRepository.findAll().forEach(employee::add);
+        employee.addAll(employeeRepository.findAll());
         return employee;
     }
 //    public Page<Employee> getAllEmployeesSortedByFirstNamePaged(int page, int pageSize) {
